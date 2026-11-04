@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: hd-followup-system
+    runtime: docker
+    dockerfilePath: ./standalone.Dockerfile
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: hd-followup-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3000"
+
+databases:
+  - name: hd-followup-db
+    plan: free
+    databaseName: hd_followup
+    user: hd_followup
